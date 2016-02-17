@@ -1,0 +1,512 @@
+@{ Layout = "~/Views/Shared/_Layout.cshtml";}
+
+@{
+    ViewData["Title"] = "";
+}
+<form name="myQuote" class="form-inline" id="quote-process" novalidate ng-submit="fillForm();">
+    <div id="tabs">
+
+        <ul>
+            <li><a href="#tabs-1">PREPRESS</a></li>
+
+            <li><a href="#tabs-2">PREPRESS CUTTING</a></li>
+
+            <li><a href="#tabs-3">DIGITAL PRINTING</a></li>
+
+            <li><a href="#tabs-4">POST PRINT CUTTING</a></li>
+
+            <li><a href="#tabs-5">FINISHING</a></li>
+
+            <li><a href="#tabs-6">PACKING</a></li>
+
+            <li><a href="#tabs-7">HARDWARE</a></li>
+        </ul>
+
+        <div id="tabs-1">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="company">Company Name*</label><br />
+                    <input type="text" class="form-control" name="company" placeholder="Company Name" ng-model="user.company" ng-required="true">
+                    <p ng-show="myQuote.company.$invalid && myQuote.company.$touched">Please fill in Company Name</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="salesp">Salesperson Name*</label><br />
+                    <input type="text" class="form-control" name="salesp" placeholder="Salesperson Name" ng-model="user.salesp" ng-required="true">
+                    <p ng-show="myQuote.salesp.$invalid && myQuote.salesp.$touched">Please fill in Your/Sales Person's Name</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="emailsales">Contact Email*</label><br />
+                    <input type="email" class="form-control" name="emailsales" placeholder="john.doe@example.com" ng-model="user.emailsales" ng-required="true">
+                    <p ng-show="myQuote.emailsales.$invalid && myQuote.emailsales.$touched">Please fill in valid email</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="partnum">Number of Part Being Made(Finished Goods)</label>
+                    <input type="number" class="form-control" name="partnum" placeholder="Enter # items" ng-model="user.partnum" ng-required="true"> <!--This might require a certain length of digits-->
+                    <p ng-show="myQuote.partnum.$invalid && myQuote.partnum.$touched">Please fill in a valid Part Number</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>New Files?</label><br />
+                    <input type="radio" name="files" id="files" value="Yes"> Yes
+                    <input type="radio" name="files" id="files" value="No"> No
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Rerun Files?</label><br />
+                    <input type="radio" name="oldfiles" value="Yes"> Yes
+                    <input type="radio" name="oldfiles" value="No"> No
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="shortp">Shortest Dimension on Print Part (inches)</label>
+                    <input type="number" class="form-control" name="shortp" placeholder="Shortest Dim" ng-model="user.shortp" ng-required="true">
+                    <p ng-show="myQuote.shortp.$invalid && myQuote.shortp.$touched">Dimensions must be a number and in inches</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="longp">Longest Dimension on Print Page (inches)</label>
+                    <input type="number" class="form-control" name="longp" placeholder="Longest Dim" ng-model="user.longp" ng-required="true">
+                    <p ng-show="myQuote.longp.$invalid && myQuote.longp.$touched">Dimensions must be a number and inches</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="pressnum">Number of Ups on Press Sheet</label>
+                    <input type="number" class="form-control" name="pressnum" placeholder="# Ups" ng-model="user.pressnum" ng-required="true">
+                    <p ng-show="myQuote.pressnum.$invalid && myQuote.pressnum.$touched">This must be a whole number</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="shortpress">Number of Short Press Sheet</label>
+                    <input type="number" class="form-control" name="shortpress" placeholder="# Short Press" ng-model="user.shortpress" ng-required="true">
+                    <p ng-show="myQuote.shortpress.$invalid && myQuote.shortpress.$touched">This must be a whole number</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="longpress">Number of Long Press Sheet</label>
+                    <input type="number" class="form-control" name="longpress" placeholder="# Long Press" ng-model="user.longpress" ng-required="true">
+                    <p ng-show="myQuote.longpress.$invalid && myQuote.longpress.$touched">This must be a whole number</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Passes First Side?</label><br />
+                    <input type="radio" name="passfirst" value="Yes"> Yes
+                    <input type="radio" name="passfirst" value="No"> No
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="inkcoverone">Percent of Ink Coverage on First Side</label>
+                    <input type="number" class="form-control" name="inkcoverone" placeholder="% Ink Coverage" ng-model="user.inkcoverone" ng-required="true">
+                    <p ng-show="myQuote.inkcoverone.$invalid && myQuote.inkcoverone.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label>Passes Second Side?</label><br />
+                    <input type="radio" name="passsecond" value="Yes"> Yes
+                    <input type="radio" name="passsecond" value="No"> No
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="inkcovertwo">Percent of Ink Coverage on Second Side</label>
+                    <input type="number" class="form-control" name="inkcovertwo" placeholder="% Ink Coverage" ng-model="user.inkcovertwo" ng-required="true">
+                    <p ng-show="myQuote.inkcovertwo.$invalid && myQuote.inkcovertwo.$touched">This must be a number</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="tabs-2">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label>Does this Job Require Sheeting?</label><br />
+                    <input type="radio" name="sheeting" value="Yes"> Yes
+                    <input type="radio" name="sheeting" value="No"> No
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="matleng">Length of Material Consumed Per Sheet</label>
+                    <input type="number" class="form-control" name="matleng" placeholder="Material Length" ng-model="user.matleng" ng-required="true">
+                    <p ng-show="myQuote.matleng.$invalid && myQuote.matleng.$touched">Length must be a number</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="matcost">Material Cost per 12 inches ($)</label><br />
+                    <input type="number" class="form-control" name="matcost" placeholder="Material Cost" ng-model="user.matcost" ng-required="true">
+                    <p ng-show="myQuote.matcost.$invalid && myQuote.matcost.$touched">Cost must be a number</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="matdesc">Material Description</label><br /> <!--This might be required-->
+                    <input type="text" class="form-control" id="matdesc" placeholder="Material Description">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label>Does this Job Require PP Guillotine Cutting?</label><br />
+                    <input type="radio" name="guillotine" value="Yes"> Yes
+                    <input type="radio" name="guillotine" value="No"> No
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="presspar">How Many Press Sheet from Parent Sheet?</label>
+                    <input type="number" class="form-control" name="presspar" placeholder="# Press Sheet" ng-model="user.presspar" ng-required="true">
+                    <p ng-show="myQuote.presspar.$invalid && myQuote.presspar.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="cuts">How Many PP Cuts?</label>
+                    <input type="number" class="form-control" name="cuts" placeholder="# PP Cuts" ng-model="user.cuts" ng-required="true">
+                    <p ng-show="myQuote.cuts.$invalid && myQuote.cuts.$touched">This must be a whole number</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="matthick">Material Thickness (inches)</label><br />
+                    <input type="number" class="form-control" name="matthick" placeholder="Material Thickness" ng-model="user.matthick" ng-required="true">
+                    <p ng-show="myQuote.matthick.$invalid && myQuote.matthick.$touched">Thickness must be a whole number</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="psheetnum">Number of Parent Sheet Required</label><br />
+                    <input type="number" class="form-control" name="psheetnum" placeholder="# Parent Sheet" ng-model="user.psheetnum" ng-required="true" >
+                    <p ng-show="myQuote.psheetnum.$invalid && myQuote.psheetnum.$touched">This must be a whole number</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="pscost">Parent or Sheet Material Costs Per Sheet ($)</label><br />
+                    <input type="number" class="form-control" name="pscost" placeholder="Sheet Cost" ng-model="user.pscost" ng-required="true">
+                    <p ng-show="myQuote.pscost.$invalid && myQuote.pscost.$touched">Cost must be a number</p>
+                </div>
+                <div class="form-group col-md-4"> <!--This might be required-->
+                    <label for="matdesc2">Material Description</label><br /><br />
+                    <input type="text" class="form-control" name="matdesc2" placeholder="Material Description">
+                </div>
+            </div>
+        </div>
+
+        <div id="tabs-3">
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Does this Job Require Press Vutek?</label><br />
+                    <input type="radio" name="vutek" value="Yes"> Yes
+                    <input type="radio" name="vutek" value="No"> No
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="vutekput">Vutek Through Put (Sq ft/hr)</label>
+                    <input type="number" class="form-control" name="vutekput" placeholder="Enter in Sq ft/hr" ng-model="user.vutekput" ng-required="true">
+                    <p ng-show="myQuote.vutekput.$invalid && myQuote.vutekput.$touched">This must be a number</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Does this Job Require Press Latex?</label><br />
+                    <input type="radio" name="latex" value="Yes"> Yes
+                    <input type="radio" name="latex" value="No"> No
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="latexput">Latex Through Put (Sq ft/hr)</label>
+                    <input type="number" class="form-control" name="latexput" placeholder="Enter in Sq ft/hr" ng-model="user.latexput" ng-required="true">
+                    <p ng-show="myQuote.latexput.$invalid && myQuote.latexput.$touched">This must be a number</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label for="pressast">Number Assistants at Press</label>
+                    <input type="number" class="form-control" name="pressast" placeholder="# Assistants" ng-model="user.pressast" ng-required="true">
+                    <p ng-show="myQuote.pressast.$invalid && myQuote.pressast.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="presssht">Number of Press Sheet</label>
+                    <input type="number" class="form-control" id="presssht" placeholder="# Press Sheets" ng-model="user.presssht" ng-required="true">
+                    <p ng-show="myQuote.presssht.$invalid && myQuote.presssht.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Post Press OPS Waste Addition?</label><br />
+                    <input type="radio" name="waste" value="Yes"> Yes
+                    <input type="radio" name="waste" value="No"> No
+                </div>
+            </div>
+        </div>
+
+        <div id="tabs-4">
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Does this Guillotine Cut?</label><br />
+                    <input type="radio" name="gcut" value="Yes"> Yes
+                    <input type="radio" name="gcut" value="No"> No
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="lifts">Number of Lifts Guillotine Post Press</label>
+                    <input type="number" class="form-control" name="lifts" placeholder="# Lifts" ng-model="user.lifts" ng-required="true">
+                    <p ng-show="myQuote.lifts.$invalid && myQuote.lifts.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="postcuts">Number of Cuts on Press Sheet</label>
+                    <input type="number" class="form-control" name="postcuts" placeholder="# Cuts Press Sheet" ng-model="user.postcuts" ng-required="true">
+                    <p ng-show="myQuote.postcuts.$invalid && myQuote.postcuts.$touched">Cuts must be a number</p>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Does this DIGI Cut?</label><br />
+                    <input type="radio" name="digicut" value="Yes"> Yes
+                    <input type="radio" name="digicut" value="No"> No
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Does this Saw Cut?</label><br />
+                    <input type="radio" name="sawcut" value="Yes"> Yes
+                    <input type="radio" name="sawcut" value="No"> No
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="sawlifts">Number of Lifts for Saw Cutting Post Press</label>
+                    <input type="number" class="form-control" name="sawlifts" placeholder="# Lifts" ng-model="user.sawlifts" ng-required="true" >
+                    <p ng-show="myQuote.sawlifts.$invalid && myQuote.sawlifts.$touched">Lifts must be a number</p>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="sawcuts">Number of Cuts on Press Sheet for Saw Cutting</label>
+                    <input type="number" class="form-control" name="sawcuts" placeholder="# Cuts Press Sheet" ng-model="user.sawcuts" ng-required="true">
+                    <p ng-show="myQuote.sawcuts.$invalid && myQuote.sawcuts.$touched">Cuts must be a number</p>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="assistant">Number of Assistants at Saw</label>
+                    <input type="number" class="form-control" name="assistant" placeholder="# Assistants" ng-model="user.assistant" ng-required="true">
+                    <p ng-show="myQuote.assistant.$invalid && myQuote.assistant.$touched">This must be a number</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Does this Router Cut?</label><br />
+                    <input type="radio" name="rcut" value="Yes"> Yes
+                    <input type="radio" name="rcut" value="No"> No
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="routerlifts">Number of Sheets Per Hour</label><br /><br />
+                    <input type="number" class="form-control" name="routerlifts" placeholder="# Sheets/hr" ng-model="user.routerlifts" ng-required="true">
+                    <p ng-show="myQuote.routerlifts.$invalid && myQuote.routerlifts.$touched">Lifts must be a number</p>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="routerhelp">Number of Assistants at Router</label>
+                    <input type="number" class="form-control" name="routerhelp" placeholder="# Assistants" ng-model="user.routerhelp" ng-required="true">
+                    <p ng-show="myQuote.routerhelp.$invalid && myQuote.routerhelp.$touched">This must be a number</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="tabs-5">
+            <div class="row">
+                <div class="col-md-offset-4">
+                    <h2>DieCutting</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Does this Die Cut?</label><br />
+                    <input type="radio" name="diecut" value="Yes"> Yes
+                    <input type="radio" name="diecut" value="No"> No
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="rollcut">Number of Sheets to Roll Die Cut</label>
+                    <input type="number" class="form-control" name="rollcut" placeholder="# Cuts" ng-model="user.rollcut" ng-required="true">
+                    <p ng-show="myQuote.rollcut.$invalid && myQuote.rollcut.$touched">Cuts must be a number</p>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="dpcuts">Number of Die Cut Through Put</label>
+                    <input type="number" class="form-control" name="dpcuts" placeholder="# Die Cuts" ng-model="user.dpcuts" ng-required="true">
+                    <p ng-show="myQuote.dpcuts.$invalid && myQuote.dpcuts.$touched">Cuts must be a number</p>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="dpassistant">Number of Assistants at Machine</label>
+                    <input type="number" class="form-control" name="dpassistant" placeholder="# Assistants" ng-model="user.dpassistant" ng-required="true">
+                    <p ng-show="myQuote.dpassistant.$invalid && myQuote.dpassistant.$touched">This must be a number</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Is this In House Die Cutting Labor?</label><br />
+                    <input type="radio" name="diecutlab" value="Yes"> Yes
+                    <input type="radio" name="diecutlab" value="No"> No
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Is this Outside Die Cutting Labor?</label><br />
+                    <input type="radio" name="diecutout" value="Yes"> Yes
+                    <input type="radio" name="diecutout" value="No"> No
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Does this Use Outside Contractor?</label><br />
+                    <input type="radio" name="diecutoutc" value="Yes"> Yes
+                    <input type="radio" name="diecutoutc" value="No"> No
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="runcost">Running Cost Per Sheet($)</label>
+                    <input type="number" class="form-control" name="runcost" placeholder="Running Cost" ng-model="user.runcost" ng-required="true">
+                    <p ng-show="myQuote.runcost.$invalid && myQuote.runcost.$touched">Cost must be a number</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-4">
+                    <h2>Banner Finishing</h2>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Does this WINDVENT?</label><br />
+                    <input type="radio" name="windvent" value="Yes"> Yes
+                    <input type="radio" name="windvent" value="No"> No
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="windventb">Number of Wind Vents per Banner?</label>
+                    <input type="number" class="form-control" name="windventb" placeholder="# Wind Vents" ng-model="user.windventb" ng-required="true">
+                    <p ng-show="myQuote.windventb.$invalid && myQuote.windventb.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Is this in house labor?</label><br />
+                    <input type="radio" name="windlab" value="Yes"> Yes
+                    <input type="radio" name="windlab" value="No"> No
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Does this HEM Top and Bottom?</label><br />
+                    <input type="radio" name="hemtb" value="Yes"> Yes
+                    <input type="radio" name="hemtb" value="No"> No
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="hemrate">HEM Rate</label><br />
+                    <input type="number" class="form-control" name="hemrate" placeholder="HEM Rate" ng-model="user.hemrate" ng-required="true">
+                    <p ng-show="myQuote.hemrate.$invalid && myQuote.hemrate.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-3">
+                    <label>Do the Sides Get HEMMED?</label><br />
+                    <input type="radio" name="sidehem" value="Yes"> Yes
+                    <input type="radio" name="sidehem" value="No"> No
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="sidehemrate">Side HEM Rate</label>
+                    <input type="number" class="form-control" name="sidehemrate" placeholder="Side HEM Rate" ng-model="user.sidehemrate" ng-required="true">
+                    <p ng-show="myQuote.sidehemrate.$invalid && myQuote.sidehemrate.$touched">This must be a number</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-3">
+                    <label>Does this get ROPES Sewn in?</label><br />
+                    <input type="radio" name="rope" value="Yes"> Yes
+                    <input type="radio" name="rope" value="No"> No
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="ropelen">Length of Rope Consumed Per Banner</label>
+                    <input type="number" class="form-control" name="ropelen" placeholder="Rope Length Used" ng-model="user.ropelen" ng-required="true">
+                    <p ng-show="myQuote.ropelen.$invalid && myQuote.ropelen.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="accion">Accion Banner Finishing Cost($)</label>
+                    <input type="number" class="form-control" name="accion" placeholder="Accion" ng-model="user.accion" ng-required="true">
+                    <p ng-show="myQuote.accion.$invalid && myQuote.accion.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="grommet">Number of Gommets per Part</label>
+                    <input type="number" class="form-control" name="grommet" placeholder="# Grommets" ng-model="user.grommet" ng-required="true">
+                    <p ng-show="myQuote.grommet.$invalid && myQuote.grommet.$touched">This must be a number</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-4">
+                    <h2>Mounting</h2>
+                </div>
+            </div>
+            <div class="form-group col-md-offset-4">
+                <label for="laminate">Number of Sheets to Laminate</label><br />
+                <input type="number" class="form-control" name="laminate" placeholder="# Laminates" ng-model="user.laminate" ng-required="true">
+                <p ng-show="myQuote.laminate.$invalid && myQuote.laminate.$touched">This must be a number</p>
+            </div>
+            <div class="row">
+                <div class="col-md-offset-4">
+                    <h2>Assembly</h2>
+                </div>
+            </div>
+            <div class="form-group col-md-offset-4">
+                <label for="grommets"># Gommets per Part</label><br />
+                <input type="number" class="form-control" name="grommets" placeholder="# Grommets" ng-model="user.grommets" ng-required="true">
+                <p ng-show="myQuote.grommets.$invalid && myQuote.grommets.$touched">This must be a number</p>
+            </div>
+        </div>
+
+        <div id="tabs-6">
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="printcart">Number of Printed Parts Per Carton</label>
+                    <input type="number" class="form-control" name="printcart" placeholder="# Printed Parts/Carton" ng-model="user.printcart" ng-required="true">
+                    <p ng-show="myQuote.printcart.$invalid && myQuote.printcart.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="cartons">Number of Cartons</label><br />
+                    <input type="number" class="form-control" name="cartons" placeholder="# Cartons" ng-model="user.cartons" ng-required="true">
+                    <p ng-show="myQuote.cartons.$invalid && myQuote.cartons.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="cartsol">Cost of Carton Solution ($)</label>
+                    <input type="number" class="form-control" name="cartsol" placeholder="Carton Solution Cost($)" ng-model="user.cartsol" ng-required="true">
+                    <p ng-show="myQuote.cartsol.$invalid && myQuote.cartsol.$touched">Cost must be a number</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="palletcart">Number of Cartons on a Pallet?</label>
+                    <input type="number" class="form-control" name="palletcart" placeholder="# Cartons/pallet" ng-model="user.palletcart" ng-required="true">
+                    <p ng-show="myQuote.palletcart.$invalid && myQuote.palletcart.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="pallets">Number of Pallets</label><br />
+                    <input type="number" class="form-control" name="pallets" placeholder="# Pallets" ng-model="user.pallets" ng-required="true">
+                    <p ng-show="myQuote.pallets.$invalid && myQuote.pallets.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="costpalet">Cost of Pallet ($)</label><br />
+                    <input type="number" class="form-control" name="costsol" placeholder="Pallet Cost($)" ng-model="user.costsol" ng-required="true">
+                    <p ng-show="myQuote.costsol.$invalid && myQuote.costsol.$touched">Cost must be a number</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="accionpack">Accion Packing Cost Total($)</label><br />
+                    <input type="number" class="form-control" name="accionpack" placeholder="Accion Packing Cost($)" ng-model="user.accionpack" ng-required="true">
+                    <p ng-show="myQuote.accionpack.$invalid && myQuote.accionpack.$touched">Cost must be a number</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="pratt">Pratt Packing Cost Total($)</label><br />
+                    <input type="number" class="form-control" name="pratt" placeholder="Pratt Packing Cost Total($)" ng-model="user.pratt" ng-required="true">
+                    <p ng-show="myQuote.pratt.$invalid && myQuote.pratt.$touched">Cost must be a number</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label for="manufacture">Total Number of Manufactured Parts</label><br /><br />
+                    <input type="number" class="form-control" name="manufacture" placeholder="# Manufactured Parts" ng-model="user.manufacture" ng-required="true">
+                    <p ng-show="myQuote.manufacture.$invalid && myQuote.manufacture.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="printperfinish">Number of Printed Parts Per Finished Good?</label>
+                    <input type="number" class="form-control" name="printperfinish" placeholder="# Printed Parts" ng-model="user.printperfinish" ng-required="true">
+                    <p ng-show="myQuote.printperfinish.$invalid && myQuote.printperfinish.$touched">This must be a number</p>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="finishgood">Number of Finished Goods</label><br /><br />
+                    <input type="number" class="form-control" name="finishgood" placeholder="# Finshed Goods" ng-model="user.finishgood" ng-required="true">
+                    <p ng-show="myQuote.finishgood.$invalid && myQuote.finishgood.$touched">This must be a number</p>
+                </div>
+            </div>
+        </div>
+
+        <div id="tabs-7">
+            <div class="row">
+                <h1>Please List any Hardware needed and its Quantity</h1>
+                <div class="form-group col-md-6">
+                    <label for="hardware">Hardware Description</label>
+                    <input type="text" class="form-control" name="hardware" placeholder="Hardware List" ng-model="user.hardware">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="quant">Quantity</label>
+                    <input type="number" class="form-control" name="quant" placeholder="Quantity" ng-model="user.quant" ng-required="true">
+                    <p ng-show="myQuote.quant.$invalid && myQuote.quant.$touched">Quantity must be a number</p>
+                    
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-offset-10">
+                    <button type="submit" class="btn btn-default btn-block register"> GET QUOTE </button>
+                </div>
+            </div>
+        </div>
+    </div>
+  </form>
