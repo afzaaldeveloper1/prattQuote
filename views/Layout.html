@@ -58,7 +58,7 @@
         <div class="container">
             <div class="row">
                 <p class="instruct">Please Answer the Following Series of Questions. Your Response will Generate a Quote for your Printing Job</p>
-                <p class="instruct">{{message}}</p>
+                <p class="instruct" ng-model="user.salesp" ng-show="myQuote.salesp.$valid && myQuote.salesp.$touched">Welcome {{user.salesp}}!</p>>
             </div>
         </div>
         
